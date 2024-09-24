@@ -1,0 +1,6 @@
+app/__pycache__/
+app/migrations/__pycache__
+app/views/__pycache__/
+motekatuApp/__pycache__/
+.vscode/
+.env

@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/destyle.css@3.0.2/destyle.css">
+    <title>トップページ</title>
+    <link rel="stylesheet" href="../夏期間制作物/css/style.css">
+    <style>
+@charset "UTF-8";
+
+:root{
+    --whiteColor: #F5F5F5;
+    --blueColor: #016989;
+    --grayColor: #D9DADE;
+    --yellowColor: #FFCA39;
+    --redColor: #DB504A;
+    --dropShadow10px: drop-shadow(0px 0px 10px #00000023);
+    --dropShadow15px: drop-shadow(0px 0px 15px #00000023);
+    --dropShadow10pxYellow: drop-shadow(0px 0px 15px #ffca3961);
+}
+
+body{
+    background: var(--whiteColor);
+    font-family: "Noto Sans JP", sans-serif;
+}
+
+header{
+    position: fixed;
+    height: 120px;
+    width: 100vw;
+    padding: 35px 5%;
+    display: flex;
+    align-items: center;
+    z-index: 999;
+    filter: var(--dropShadow15px);
+}
+
+.headerItem{
+    margin: 0 7.5px;
+}
+
+header .logo{
+    width: 18%;
+    height: auto;
+    -webkit-user-drag: none;
+}
+
+header .tabContainer{
+    width: 100%;
+    height: 100%;
+    display: flex;
+}
+
+header .tab{
+    background: var(--grayColor);
+    backdrop-filter: blur(20px);
+    height: 100%;
+    padding: 5px 2.5px;
+    border-radius: 9999px;
+    display: flex;
+}
+
+.tab a{
+    width: 100%;
+    height: 100%;
+    margin: 0 2.5px;
+}
+
+.tab button{
+    font-weight: 600;
+    font-size: 14px;
+    background: var(--whiteColor);
+    width: 100%;
+    height: 100%;
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#kinds button.active{
+    background: var(--yellowColor);
+    filter: var(--dropShadow10pxYellow);
+}
+
+#gender button svg{
+    width: 25px;
+    height: auto;
+}
+
+#gender #female .path{
+    fill: var(--redColor);
+}
+
+#gender #male .path{
+    fill: var(--blueColor);
+}
+
+#gender #female.active{
+    background: var(--redColor);
+}
+
+#gender #female.active .path{
+    fill: var(--whiteColor);
+}
+
+#gender #female.active{
+    background: var(--redColor);
+}
+
+#gender #male.active{
+    background: var(--blueColor);
+}
+
+#gender #male.active .path{
+    fill: var(--whiteColor);
+}
+
+#kinds{
+    flex-grow: 9;
+}
+
+#gender{
+    flex-grow: 2.5;
+}
+
+.loginButton{
+    background: var(--grayColor);
+    height: 100%;
+    width: auto;
+    aspect-ratio: 1/1;
+    padding: 5px;
+    border-radius: 9999px;
+}
+
+.loginButton .icon{
+    background: var(--whiteColor);
+    width: 100%;
+    height: 100%;
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.body{
+    background-color: #F5F5F5;
+    text-align: center;
+}
+
+.p{
+    margin-left: 50px
+}
+
+.float_left{
+    display: flex;
+}
+
+
+
+.img {
+    width: 400px;
+    height: 200px;
+    border-radius: 5%;
+}
+
+.table td {
+    text-align: center;
+    padding: 20px;
+}
+
+.contents {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+}
+
+.title{
+    text-align: center;
+    font-size: 50px;
+    padding: 20px;
+}
+.reviewButton{
+    background: var(--yellowColor);
+    position: fixed;
+    /* width: 200px;
+    height: 50px; */
+    bottom: 40px;
+    right: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    padding: 10px 20px;
+    filter: var(--dropShadow10px);
+}
+
+.reviewButton > *{
+    margin: 5px;
+    
+}
+td p {
+    padding: 10px;
+}
+    </style>
+</head>
+<body class="body">
+
+    <header>
+        {% load static %}
+        <img src="{% static 'app/motekatuLogo.png' %}" alt="motekatu" class="logo headerItem">
+        <div class="tabContainer">
+            <article class="tab headerItem" id="kinds">
+                <a href="{% url 'app:review_list' 1 gender %}"><button>ヘアセット</button></a>
+                <a href="{% url 'app:review_list' 2 gender %}"><button>コスメ</button></a>
+                <a href="{% url 'app:review_list' 3 gender %}"><button>香水</button></a>
+                <a href="{% url 'app:review_list' 4 gender %}"><button>アクセサリー</button></a>
+                <a href="{% url 'app:review_list' 5 gender %}"><button>スキンケア</button></a>
+                <a href="{% url 'app:review_list' 6 gender %}"><button >服装</button></a>
+            </article>
+            <article class="tab headerItem" id="gender">
+                <a>
+                    <button id="female">
+                        <svg width="36" height="43" viewBox="0 0 36 43" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle class="path" cx="18.1339" cy="11.3182" r="7.63636" fill="#DB504A"/>
+                            <path class="path" d="M18.1337 18.9546L28.0537 36.1364H8.21382L18.1337 18.9546Z" fill="#DB504A"/>
+                        </svg>
+                    </button>
+                </a>
+                <a>
+                    <button id="male">
+                        <svg width="36" height="43" viewBox="0 0 36 43" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle class="path" cx="18.1337" cy="12.591" r="7.63636" fill="#FEFEFE"/>
+                            <path class="path" d="M18.1337 37.4092L8.21379 20.2274L28.0536 20.2274L18.1337 37.4092Z" fill="#FEFEFE"/>
+                        </svg>                            
+                    </button>
+                </a>
+            </article>
+        </div>
+        <a href="{% url 'app:sign_out' %}" class="loginButton headerItem">
+            <div class="icon">
+                <img src="{% static 'app/Log_out_1.png' %}">
+            </div>
+        </a>
+    </header>
+
+    <div class="contents"> 
+        <table class="table">
+            <tr>
+                <td class="item1">
+                    <img class="img" src="{% static 'app/MOLDIV-002.png' %}">
+                    <p>ヘアスタイル</p>
+                </td>
+                <td class="item2">
+                    <img class="img" src="{% static 'app/pixta_61859955_M.jpg' %}">
+                    <p>コスメ</p>
+                </td>
+                <td class="item3">
+                    <img class="img" src="{% static 'app/7DD63528-5C79-4EBD-B102-91D491206DF0.JPEG' %}">
+                    <p>香水</p>
+                </td>
+            </tr>
+            <tr>
+                <td class="item4">
+                    <img class="img" src=" {% static 'app/MOLDIV-001 3.jpg' %}">
+                    <p>アクセサリー</p>
+                </td>
+                <td class="item5">
+                    <img class="img" src= "{% static 'app/15−01-705x533.jpg' %}">
+                    <p>スキンケア</p>
+                </td>
+                <td class="item6">
+                    <img class="img" src="{% static 'app/MOLDIV-001 2.jpg' %}">
+                    <p>服装</p>
+                </td>
+            </tr>
+        </table>
+        <a href="{% url 'app:post' %}">
+            <button class="reviewButton">
+                <img src="{% static 'app/editIcon.svg'%}" alt="">
+                <p>レビューを投稿</p>
+            </button>
+        </a>
+    </div>
+
+    <!-- JQuery -->
+    <script
+    src="https://code.jquery.com/jquery-3.7.1.min.js"
+    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+    crossorigin="anonymous">
+    </script>
+    <script>
+        $(".item1").click(function(){
+            window.location.href = "{% url 'app:review_list' 1 gender %}"
+        });
+
+        $(".item2").click(function(){
+            window.location.href = "{% url 'app:review_list' 2 gender %}"
+        });
+
+        $(".item3").click(function(){
+            window.location.href = "{% url 'app:review_list' 3 gender %}"
+        }); 
+
+        $(".item4").click(function(){
+            window.location.href = "{% url 'app:review_list' 4 gender %}"
+        });
+
+        $(".item5").click(function(){
+            window.location.href = "{% url 'app:review_list' 5 gender %}"
+        });
+
+        $(".item6").click(function(){
+            window.location.href = "{% url 'app:review_list' 6 gender %}"
+        });
+    </script>
+</body>
+</html>

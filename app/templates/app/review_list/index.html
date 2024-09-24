@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <!-- meta -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,800&family=Noto+Sans+JP:wght@100..900&family=Noto+Serif+JP&display=swap" rel="stylesheet">
+    <!-- title -->
+    <title>レビュー一覧</title>
+    <style>
+@charset "utf-8";
+/***
+    The new CSS reset - version 1.11.2 (last updated 15.11.2023)
+    GitHub page: https://github.com/elad2412/the-new-css-reset
+***/
+
+/*
+    Remove all the styles of the "User-Agent-Stylesheet", except for the 'display' property
+    - The "symbol *" part is to solve Firefox SVG sprite bug
+    - The "html" element is excluded, otherwise a bug in Chrome breaks the CSS hyphens property (https://github.com/elad2412/the-new-css-reset/issues/36)
+ */
+ *:where(:not(html, iframe, canvas, img, svg, video, audio):not(svg *, symbol *)) {
+    all: unset;
+    display: revert;
+}
+
+/* Preferred box-sizing value */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* Fix mobile Safari increase font-size on landscape mode */
+html {
+    -moz-text-size-adjust: none;
+    -webkit-text-size-adjust: none;
+    text-size-adjust: none;
+}
+
+/* Reapply the pointer cursor for anchor tags */
+a, button {
+    cursor: revert;
+}
+
+/* Remove list styles (bullets/numbers) */
+ol, ul, menu, summary {
+    list-style: none;
+}
+
+/* For images to not be able to exceed their container */
+img {
+    max-inline-size: 100%;
+    max-block-size: 100%;
+}
+
+/* removes spacing between cells in tables */
+table {
+    border-collapse: collapse;
+}
+
+/* Safari - solving issue when using user-select:none on the <body> text input doesn't working */
+input, textarea {
+    -webkit-user-select: auto;
+}
+
+/* revert the 'white-space' property for textarea elements on Safari */
+textarea {
+    white-space: revert;
+}
+
+/* minimum style to allow to style meter element */
+meter {
+    -webkit-appearance: revert;
+    appearance: revert;
+}
+
+/* preformatted text - use only for this feature */
+:where(pre) {
+    all: revert;
+    box-sizing: border-box;
+}
+
+/* reset default text opacity of input placeholder */
+::placeholder {
+    color: unset;
+}
+
+/* fix the feature of 'hidden' attribute.
+   display:revert; revert to element instead of attribute */
+:where([hidden]) {
+    display: none;
+}
+
+/* revert for bug in Chromium browsers
+   - fix for the content editable attribute will work properly.
+   - webkit-user-select: auto; added for Safari in case of using user-select:none on wrapper element*/
+:where([contenteditable]:not([contenteditable="false"])) {
+    -moz-user-modify: read-write;
+    -webkit-user-modify: read-write;
+    overflow-wrap: break-word;
+    -webkit-line-break: after-white-space;
+    -webkit-user-select: auto;
+}
+
+/* apply back the draggable feature - exist only in Chromium and Safari */
+:where([draggable="true"]) {
+    -webkit-user-drag: element;
+}
+
+/* Revert Modal native behavior */
+:where(dialog:modal) {
+    all: revert;
+    box-sizing: border-box;
+}
+
+/* Remove details summary webkit styles */
+::-webkit-details-marker {
+    display: none;
+}
+
+:root{
+    --whiteColor: #F5F5F5;
+    --blueColor: #016989;
+    --grayColor: #D9DADE;
+    --yellowColor: #FFCA39;
+    --redColor: #DB504A;
+    --dropShadow10px: drop-shadow(0px 0px 10px #00000023);
+    --dropShadow15px: drop-shadow(0px 0px 15px #00000023);
+    --dropShadow10pxYellow: drop-shadow(0px 0px 15px #ffca3961);
+}
+
+body{
+    background: var(--whiteColor);
+    font-family: "Noto Sans JP", sans-serif;
+}
+
+header{
+    position: fixed;
+    height: 120px;
+    width: 100vw;
+    padding: 35px 5%;
+    display: flex;
+    align-items: center;
+    z-index: 999;
+    {% comment %} filter: var(--dropShadow15px); {% endcomment %}
+    background-color: #F5F5F5;
+}
+
+.headerItem{
+    margin: 0 7.5px;
+}
+
+header .logo{
+    width: 18%;
+    height: auto;
+    -webkit-user-drag: none;
+}
+
+header .tabContainer{
+    width: 100%;
+    height: 100%;
+    display: flex;
+}
+
+header .tab{
+    background: var(--grayColor);
+    backdrop-filter: blur(20px);
+    height: 100%;
+    padding: 5px 2.5px;
+    border-radius: 9999px;
+    display: flex;
+}
+
+.tab a{
+    width: 100%;
+    height: 100%;
+    margin: 0 2.5px;
+}
+
+.tab button{
+    font-weight: 600;
+    font-size: 14px;
+    background: var(--whiteColor);
+    width: 100%;
+    height: 100%;
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#kinds button.active{
+    background: var(--yellowColor);
+    filter: var(--dropShadow10pxYellow);
+}
+
+#gender button svg{
+    width: 25px;
+    height: auto;
+}
+
+#gender #female .path{
+    fill: var(--redColor);
+}
+
+#gender #male .path{
+    fill: var(--blueColor);
+}
+
+#gender #female.active{
+    background: var(--redColor);
+}
+
+#gender #female.active .path{
+    fill: var(--whiteColor);
+}
+
+#gender #female.active{
+    background: var(--redColor);
+}
+
+#gender #male.active{
+    background: var(--blueColor);
+}
+
+#gender #male.active .path{
+    fill: var(--whiteColor);
+}
+
+#kinds{
+    flex-grow: 9;
+}
+
+#gender{
+    flex-grow: 2.5;
+}
+
+.loginButton{
+    background: var(--grayColor);
+    height: 100%;
+    width: auto;
+    aspect-ratio: 1/1;
+    padding: 5px;
+    border-radius: 9999px;
+}
+
+.loginButton .icon{
+    background: var(--whiteColor);
+    width: 100%;
+    height: 100%;
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cardContainer{
+    padding: 0 5%;
+    padding-top: 120px;
+    width: 100vw;
+    display: flex;
+    flex-wrap: wrap;
+    filter: var(--dropShadow15px);
+}
+
+.card{
+    background: var(--blueColor);
+    width: calc((100% - (22px * 8))/4);
+    height: 575px;
+    margin: 20px;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.div_logo {
+    width: 288px;
+    height: 288px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card .coverImage{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.card .content{
+    width: 100%;
+    height: 52%;
+    background: #ffffff;
+    padding: 15px;
+}
+
+.content h1{
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.svg{
+    position: absolute;
+    width: 0;
+    height: 0;
+}
+
+.starFrame{
+    margin: 10px 0;
+    width: 130px;
+    height: 20px;
+    background: var(--grayColor);
+    background-size: cover;
+    -webkit-clip-path: url(#starClipItem);
+    clip-path: url(#starClipItem);
+}
+
+.starBar{
+    background-color: var(--yellowColor);
+    height: 100%;
+}
+
+.content p{
+    font-size: 14px;
+    opacity: 0.5;
+}
+
+.reviewButton{
+    background: var(--yellowColor);
+    position: fixed;
+    /* width: 200px;
+    height: 50px; */
+    bottom: 40px;
+    right: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    padding: 10px 20px;
+    filter: var(--dropShadow10px);
+}
+
+.reviewButton > *{
+    margin: 5px;
+    
+}
+    </style>
+</head>
+<body>
+    {% load static %} 
+        <header>
+            <img src="{% static 'app/motekatuLogo.png' %}" alt="motekatu" class="logo headerItem">
+            <div class="tabContainer">
+                <article class="tab headerItem" id="kinds">
+                    <a href="{% url 'app:review_list' 1 gender %}"><button class="{{active_type_1}}">ヘアセット</button></a>
+                    <a href="{% url 'app:review_list' 2 gender %}"><button class="{{active_type_2}}">コスメ</button></a>
+                    <a href="{% url 'app:review_list' 3 gender %}"><button class="{{active_type_3}}">香水</button></a>
+                    <a href="{% url 'app:review_list' 4 gender %}"><button class="{{active_type_4}}">アクセサリー</button></a>
+                    <a href="{% url 'app:review_list' 5 gender %}"><button class="{{active_type_5}}">スキンケア</button></a>
+                    <a href="{% url 'app:review_list' 6 gender %}"><button class="{{active_type_6}}" >服装</button></a>
+                </article>
+                <article class="tab headerItem" id="gender">
+                    <a href="{% url 'app:review_list' type 2 %}" class="{{active_gender_1}}">
+                        <button id="female" class="{{active_gender_2}}">
+                            <svg width="36" height="43" viewBox="0 0 36 43" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle class="path" cx="18.1339" cy="11.3182" r="7.63636" fill="#DB504A"/>
+                                <path class="path" d="M18.1337 18.9546L28.0537 36.1364H8.21382L18.1337 18.9546Z" fill="#DB504A"/>
+                            </svg>
+                        </button>
+                    </a>
+                    <a href="{% url 'app:review_list' type 1 %}">
+                        <button id="male" class="{{active_gender_1}}">
+                            <svg width="36" height="43" viewBox="0 0 36 43" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle class="path" cx="18.1337" cy="12.591" r="7.63636" fill="#FEFEFE"/>
+                                <path class="path" d="M18.1337 37.4092L8.21379 20.2274L28.0536 20.2274L18.1337 37.4092Z" fill="#FEFEFE"/>
+                            </svg>                            
+                        </button>
+                    </a>
+                </article>
+            </div>
+            <a href="{% url 'app:sign_out' %}" class="loginButton headerItem">
+                <div class="icon">
+                    <img src="{% static 'app/Log_out_1.png' %}">
+                </div>
+            </a>
+        </header>
+        <main>
+            <section class="cardContainer">
+                {% for i in reviews %}
+                <article class="card">
+                    <div class="div_logo">
+                        {% if i.image %}
+                        <img src="{{i.image}}" class="coverImage">
+                        {% else %}
+                        <img class="coverImage">
+                        {% endif %}
+                    </div>
+                    <div class="content">
+                        <h1>{{i.name}}</h1>
+                        <svg class="svg">
+                            <clipPath id="starClipItem" clipPathUnits="objectBoundingBox"><path d="M0.077,0 L0.094,0.382 H0.15 L0.105,0.618 L0.122,1 L0.077,0.764 L0.032,1 L0.049,0.618 L0.004,0.382 H0.06 L0.077,0 M0.29,0 L0.308,0.382 H0.364 L0.318,0.618 L0.336,1 L0.29,0.764 L0.245,1 L0.262,0.618 L0.217,0.382 H0.273 L0.29,0 M0.521,0.382 L0.504,0 L0.486,0.382 H0.43 L0.476,0.618 L0.458,1 L0.504,0.764 L0.549,1 L0.532,0.618 L0.577,0.382 H0.521 M0.717,0 L0.734,0.382 H0.79 L0.745,0.618 L0.762,1 L0.717,0.764 L0.672,1 L0.689,0.618 L0.644,0.382 H0.7 L0.717,0 M0.948,0.382 L0.93,0 L0.913,0.382 H0.857 L0.903,0.618 L0.885,1 L0.93,0.764 L0.976,1 L0.958,0.618 L1,0.382 H0.948"></path></clipPath>
+                        </svg>
+                        <div class="starFrame">
+                            <div class="starBar" style="width: calc((100% / 5) * {{i.star}})"></div>
+                        </div>              
+                        <p>{{i.comment}}</p>
+                    </div>
+                </article>
+                {% endfor %}
+            </section>
+            <a href="{% url 'app:post' %}">
+                <button class="reviewButton">
+                    <img src="{% static 'app/editIcon.svg'%}" alt="">
+                    <p>レビューを投稿</p>
+                </button>
+            </a>
+        </main>
+        <script
+        src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+        crossorigin="anonymous">
+    </script>
+    <script> $("img.logo").click(function(){window.location.href = "{% url 'app:top' %}" });</script>
+</body>
+</html>
