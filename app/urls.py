@@ -7,6 +7,7 @@ from django.conf.urls.static import static
 app_name = 'app'
 
 urlpatterns = [
+    path('', views.site.index, name='site'),
     path('sign_up/', views.sign_up.index, name='sign_up'),
     path('sign_up/save/', views.sign_up.save, name='sign_up.save'),
     path('sign_in/',
@@ -21,6 +22,5 @@ urlpatterns = [
     path('post/save', views.post.save, name='post.save'),
     path('review_list/<str:type>/<str:gender>/',  views.review_list.index, name='review_list'),
     path('sign_out/', views.sign_out.index, name='sign_out'),
-    path('site/', views.site.index, name='site'),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
